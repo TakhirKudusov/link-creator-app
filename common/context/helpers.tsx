@@ -1,9 +1,9 @@
-const handleGetLogged = (): boolean | null => {
-  const isLogged = localStorage.getItem("isLogged");
-  if (isLogged !== null) {
-    return JSON.parse(isLogged) === "true";
+const handleGetLogged = (): string | null => {
+  const accessToken = localStorage.getItem("accessToken");
+  if (accessToken !== null) {
+    return JSON.parse(accessToken);
   }
-  return isLogged;
+  return accessToken;
 };
 
 export { handleGetLogged };
