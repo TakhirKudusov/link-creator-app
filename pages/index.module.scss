@@ -1,0 +1,10 @@
+.not-found-container {
+  margin: 50px;
+  justify-content: center;
+  &__title {
+    font-size: 2rem;
+  }
+  &__button {
+    margin-top: 5px;
+  }
+}

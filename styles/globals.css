@@ -15,12 +15,27 @@ a {
   box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
+.exclamation-icon {
+  font-size: 200%;
+  position: relative;
+  left: -15px;
+  top: 1px;
+  color: #9d0000 !important;
 }
+
+.success-icon {
+  font-size: 150%;
+  position: relative;
+  left: -15px;
+  top: -5px;
+  color: green !important;
+}
+/*@media (prefers-color-scheme: dark) {*/
+/*  html {*/
+/*    color-scheme: dark;*/
+/*  }*/
+/*  body {*/
+/*    color: white;*/
+/*    background: black;*/
+/*  }*/
+/*}*/
