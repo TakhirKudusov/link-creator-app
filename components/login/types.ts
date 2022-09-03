@@ -1,5 +1,5 @@
-import { ReqArgs } from "../../redux/interfaces";
+import { UserArgs } from "../../redux/interfaces";
 
-export type Form = ReqArgs & {
+export type Form = UserArgs & {
   remember?: boolean;
 };

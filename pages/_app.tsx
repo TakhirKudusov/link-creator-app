@@ -7,7 +7,11 @@ import { store } from "../redux";
 
 function MyApp({ Component, pageProps }: AppProps) {
   if (typeof window === "undefined") {
-    return <Component {...pageProps} />;
+    return (
+      <Provider store={store}>
+        <Component {...pageProps} />
+      </Provider>
+    );
   }
 
   return (

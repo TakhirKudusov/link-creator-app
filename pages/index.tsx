@@ -5,13 +5,13 @@ import { AppContext } from "../common/context/AppContext";
 import { Page, paths } from "../routes/constants";
 
 const Home: NextPage = () => {
-  const { isLogged, ...rest } = useContext(AppContext);
+  const { accessToken, ...rest } = useContext(AppContext);
 
   const router = useRouter();
 
   useEffect(() => {
     document.title = "Link App | Main";
-    if (!isLogged) {
+    if (!accessToken) {
       router.push(paths[Page.LOGIN]);
     }
   }, []);
