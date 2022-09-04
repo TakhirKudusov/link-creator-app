@@ -1,16 +1,17 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
-import { AppContext } from "../common/context/AppContext";
 import { Page, paths } from "../routes/constants";
+import MainLayout from "../components/layout/MainLayout";
+import { Component } from "../common/types/types";
+import { useAppSelector } from "../redux/hooks";
 
-const Home: NextPage = () => {
-  const { accessToken, ...rest } = useContext(AppContext);
-
+const Home: Component = () => {
   const router = useRouter();
 
   useEffect(() => {
     document.title = "Link App | Main";
+    const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) {
       router.push(paths[Page.LOGIN]);
     }
@@ -18,5 +19,7 @@ const Home: NextPage = () => {
 
   return <div></div>;
 };
+
+Home.PageLayout = MainLayout;
 
 export default Home;

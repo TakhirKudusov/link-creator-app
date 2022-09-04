@@ -3,8 +3,10 @@ import { Button } from "antd";
 import styles from "./index.module.scss";
 import { useRouter } from "next/router";
 import { Page, paths } from "../routes/constants";
+import { Component } from "../common/types/types";
+import MainLayout from "../components/layout/MainLayout";
 
-const NotFound: React.FC = () => {
+const NotFound: Component = () => {
   const route = useRouter();
 
   useEffect(() => {
@@ -29,4 +31,5 @@ const NotFound: React.FC = () => {
   );
 };
 
+NotFound.PageLayout = MainLayout;
 export default NotFound;

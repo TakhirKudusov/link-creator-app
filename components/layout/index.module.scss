@@ -1,0 +1,14 @@
+.layout {
+  position: absolute;
+  width: 100%;
+  min-height: 100%;
+  &__logo {
+    color: white;
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
+  &__user-name {
+    float: right;
+    color: white !important;
+  }
+}

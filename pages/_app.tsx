@@ -1,26 +1,35 @@
 import "../styles/globals.css";
-import type { AppProps } from "next/app";
-import { ContextProvider } from "../common/context/AppContext";
 import "antd/dist/antd.css";
-import { Provider } from "react-redux";
-import { store } from "../redux";
+import { wrapper } from "../redux";
+import { ComponentWithPageLayout } from "../common/types/types";
+import { useEffect } from "react";
+import { useAppDispatch } from "../redux/hooks";
+import { setAccessToken } from "../redux/slicers/accessTokenSlicer";
+import { setUsername } from "../redux/slicers/usernameSlicer";
 
-function MyApp({ Component, pageProps }: AppProps) {
-  if (typeof window === "undefined") {
-    return (
-      <Provider store={store}>
-        <Component {...pageProps} />
-      </Provider>
-    );
-  }
+function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const accessToken = localStorage.getItem("accessToken");
+      const username = localStorage.getItem("username");
+      dispatch(setAccessToken(accessToken));
+      dispatch(setUsername(username));
+    }
+  }, []);
 
   return (
-    <ContextProvider>
-      <Provider store={store}>
+    <>
+      {Component.PageLayout ? (
+        <Component.PageLayout>
+          <Component {...pageProps} />
+        </Component.PageLayout>
+      ) : (
         <Component {...pageProps} />
-      </Provider>
-    </ContextProvider>
+      )}
+    </>
   );
 }
 
-export default MyApp;
+export default wrapper.withRedux(MyApp);

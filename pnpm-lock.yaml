@@ -12,6 +12,7 @@ specifiers:
   eslint-config-next: 12.2.5
   http-proxy-middleware: ^2.0.6
   next: 12.2.5
+  next-redux-wrapper: ^7.0.5
   prettier: ^2.7.1
   react: 18.2.0
   react-dom: 18.2.0
@@ -27,6 +28,7 @@ dependencies:
   axios: 0.27.2
   http-proxy-middleware: 2.0.6
   next: 12.2.5_vuxjv6o7qhupugnkyf7vyqsruq
+  next-redux-wrapper: 7.0.5_hqvnqhaxpizklyi3ao27hqxpae
   prettier: 2.7.1
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -1699,6 +1701,18 @@ packages:
   /natural-compare/1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: true
+
+  /next-redux-wrapper/7.0.5_hqvnqhaxpizklyi3ao27hqxpae:
+    resolution: {integrity: sha512-UFXdAWG5i+GFT8+Hoqpx3GArkPh34fVWF9YoA2VSHlBzsrPtnRd7NWM6FNSYUennpommTpWJ09mu+r/1UxyIkg==}
+    peerDependencies:
+      next: '>=10.0.3'
+      react: '*'
+      react-redux: '*'
+    dependencies:
+      next: 12.2.5_vuxjv6o7qhupugnkyf7vyqsruq
+      react: 18.2.0
+      react-redux: 8.0.2_5d4wf3yo6k5smpa3kasqkeetaq
+    dev: false
 
   /next/12.2.5_vuxjv6o7qhupugnkyf7vyqsruq:
     resolution: {integrity: sha512-tBdjqX5XC/oFs/6gxrZhjmiq90YWizUYU6qOWAfat7zJwrwapJ+BYgX2PmiacunXMaRpeVT4vz5MSPSLgNkrpA==}
