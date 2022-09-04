@@ -11,3 +11,11 @@ export interface PostReq {
   };
   body?: UserArgs | string;
 }
+
+export interface TAccessTokenState {
+  accessToken: string | null;
+}
+
+export interface TUsernameState {
+  username: string | null;
+}

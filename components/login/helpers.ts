@@ -2,6 +2,8 @@ import { Form } from "./types";
 import { handleOpenErrorNotificationHelper } from "../../common/helpers/handleOpenErrorNotification.helper";
 import { StatusCodesEnum } from "../../common/enums/StatusCodes.enum";
 import { handleOpenSuccessNotificationHelper } from "../../common/helpers/handleOpenSuccessNotification.helper";
+import { AppDispatch } from "../../redux/types";
+import { setAccessToken } from "../../redux/slicers/accessTokenSlicer";
 
 const handleRespStatus = (data: any): void => {
   if (data.error) {
@@ -18,8 +20,8 @@ const handleCatchError = (error: any): void => {
 };
 
 const handleFormSubmit =
-  (register: any, login: any, isSignInForm: boolean) => async (form: Form) => {
-    console.log(form);
+  (register: any, login: any, isSignInForm: boolean, dispatch: AppDispatch) =>
+  async (form: Form) => {
     if (!isSignInForm) {
       await register(form)
         .then((data: any) => {
@@ -35,11 +37,9 @@ const handleFormSubmit =
       await login(reqBody)
         .then((data: any) => {
           handleRespStatus(data);
-          // console.log(data.data.access_token);
-          localStorage.setItem(
-            "accessToken",
-            JSON.stringify(data.data.access_token)
-          );
+          const accessToken = data.data.access_token;
+          dispatch(setAccessToken(accessToken));
+          localStorage.setItem("accessToken", JSON.stringify(accessToken));
         })
         .catch((error: any) => {
           handleCatchError(error);
@@ -47,4 +47,7 @@ const handleFormSubmit =
     }
   };
 
-export { handleFormSubmit };
+const handleGetUsername = (reqArgs: string): string =>
+  reqArgs.split("&")[0].split("=")[1];
+
+export { handleFormSubmit, handleGetUsername };
