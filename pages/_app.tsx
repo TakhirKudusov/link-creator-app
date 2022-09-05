@@ -6,8 +6,11 @@ import { useEffect } from "react";
 import { useAppDispatch } from "../redux/hooks";
 import { setAccessToken } from "../redux/slicers/accessTokenSlicer";
 import { setUsername } from "../redux/slicers/usernameSlicer";
+import { useRouter } from "next/router";
+import { Page, paths } from "../routes/constants";
 
 function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
+  const router = useRouter();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -16,6 +19,12 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
       const username = localStorage.getItem("username");
       dispatch(setAccessToken(accessToken));
       dispatch(setUsername(username));
+      if (!accessToken) {
+        router.push(paths[Page.LOGIN]);
+      }
+      if (accessToken && router.pathname.includes("/login")) {
+        router.push(paths[Page.HOME]);
+      }
     }
   }, []);
 

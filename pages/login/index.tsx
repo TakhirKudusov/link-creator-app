@@ -12,10 +12,6 @@ const LoginPage: Component = () => {
 
   useEffect(() => {
     document.title = "Link App | Login page";
-    const accessToken = localStorage.getItem("accessToken");
-    if (accessToken) {
-      route.push(paths[Page.HOME]);
-    }
   }, []);
 
   return (
