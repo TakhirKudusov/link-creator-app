@@ -10,7 +10,7 @@ import {
 import {
   useLoginMutation,
   useRegisterMutation,
-} from "../../redux/APIs/statisticsAPI";
+} from "../../redux/APIs/loginAPI";
 import { useRouter } from "next/router";
 import { Page, paths } from "../../routes/constants";
 import { useAppDispatch } from "../../redux/hooks";

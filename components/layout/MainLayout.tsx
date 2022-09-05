@@ -19,9 +19,6 @@ const MainLayout: React.FC<Props> = ({ children }) => {
   const username = useAppSelector<string>((state) => state.username.username);
 
   const route = useRouter();
-  // useEffect(() => {
-  //   console.log(status);
-  // }, [status]);
 
   return (
     <Layout className={styles["layout"]}>

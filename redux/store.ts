@@ -1,12 +1,16 @@
 import { AnyAction, combineReducers, configureStore } from "@reduxjs/toolkit";
-import { statisticsAPI } from "./APIs/statisticsAPI";
+import { loginAPI } from "./APIs/loginAPI";
+import { statisticsApi } from "./APIs/statisticsAPI";
 import accessTokenReducer from "./slicers/accessTokenSlicer";
 import usernameReducer from "./slicers/usernameSlicer";
 import { createWrapper, HYDRATE } from "next-redux-wrapper";
 import { CurriedGetDefaultMiddleware } from "@reduxjs/toolkit/src/getDefaultMiddleware";
+import { setupListeners } from "@reduxjs/toolkit/query";
+import { store } from "next/dist/build/output/store";
 
 const combinedReducer = combineReducers({
-  [statisticsAPI.reducerPath]: statisticsAPI.reducer,
+  [loginAPI.reducerPath]: loginAPI.reducer,
+  [statisticsApi.reducerPath]: statisticsApi.reducer,
   accessToken: accessTokenReducer,
   username: usernameReducer,
 });
@@ -30,7 +34,9 @@ export const makeStore = () =>
   configureStore({
     reducer,
     middleware: (getDefaultMiddleware: CurriedGetDefaultMiddleware<any>) =>
-      getDefaultMiddleware().concat(statisticsAPI.middleware),
+      getDefaultMiddleware()
+        .concat(loginAPI.middleware)
+        .concat(statisticsApi.middleware),
   } as any);
 
 export const wrapper = createWrapper(makeStore, { debug: true });
