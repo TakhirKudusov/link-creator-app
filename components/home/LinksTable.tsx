@@ -5,13 +5,14 @@ import { useEffect, useState } from "react";
 import { useGetStatisticsQuery } from "../../redux/APIs/statisticsAPI";
 import { handleChangeTablePage } from "./helpers";
 import { useDispatch } from "react-redux";
+import NewLinkDrawer from "./NewLinkDrawer";
 
 const LinksTable: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [rows, setRows] = useState<DataType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useDispatch();
-  const { data = [], isLoading, isSuccess, refetch } = useGetStatisticsQuery(0);
+  const { data = [], isLoading, isSuccess } = useGetStatisticsQuery(0);
 
   useEffect(() => {
     if (isSuccess) {
@@ -48,6 +49,7 @@ const LinksTable: React.FC = () => {
               );
             }}
           />
+          <NewLinkDrawer />
         </div>
       )}
     </>

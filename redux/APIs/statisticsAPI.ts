@@ -18,7 +18,7 @@ export const statisticsApi = createApi({
       return headers;
     },
   }),
-  keepUnusedDataFor: 120,
+  keepUnusedDataFor: 60,
   endpoints: (build) => ({
     getStatistics: build.query({
       query: (offset = "0"): { url: string } => ({
@@ -51,8 +51,9 @@ export const statisticsApi = createApi({
           target: "",
           counter: 0,
         };
-        newResp.push({ ...emptyItem, target: "The end of list" });
-        console.log({ arg, meta });
+        if (newResp.length >= 20) {
+          newResp.push(emptyItem);
+        }
         if (Number.parseInt(arg, 10) > 0) {
           for (let i = 0; i < Number.parseInt(arg, 10); i++) {
             newResp.unshift(emptyItem);
@@ -77,8 +78,20 @@ export const statisticsApi = createApi({
         url: `squeeze?link=${reqArg}`,
         method: "POST",
       }),
+      onQueryStarted: async (arg, { queryFulfilled }) => {
+        queryFulfilled
+          .then((data) => {
+            console.log(data);
+            handleOpenSuccessNotificationHelper("Short link created!");
+          })
+          .catch((error) => {
+            console.error(error.error.data.detail);
+            handleOpenErrorNotificationHelper(
+              StatusCodesEnum[error.error.status]
+            );
+          });
+      },
       invalidatesTags: (result, error, id) => [
-        { type: "Statistics", id },
         { type: "Statistics", id: "PARTIAL-LIST" },
       ],
     }),
