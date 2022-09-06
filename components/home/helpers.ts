@@ -37,4 +37,18 @@ const handleChangeTablePage = async (
   }
 };
 
-export { handleChangeTablePage };
+const handleValidateForm = async (
+  form: any,
+  setIsDisabled: Dispatch<SetStateAction<boolean>>
+): Promise<void> => {
+  try {
+    const data = await form.validateFields();
+    setIsDisabled(false);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+    setIsDisabled(true);
+  }
+};
+
+export { handleChangeTablePage, handleValidateForm };

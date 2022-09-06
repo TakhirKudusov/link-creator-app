@@ -3,16 +3,16 @@ import { loginAPI } from "./APIs/loginAPI";
 import { statisticsApi } from "./APIs/statisticsAPI";
 import accessTokenReducer from "./slicers/accessTokenSlicer";
 import usernameReducer from "./slicers/usernameSlicer";
+import openModalReducer from "./slicers/openModalSlicer";
 import { createWrapper, HYDRATE } from "next-redux-wrapper";
 import { CurriedGetDefaultMiddleware } from "@reduxjs/toolkit/src/getDefaultMiddleware";
-import { setupListeners } from "@reduxjs/toolkit/query";
-import { store } from "next/dist/build/output/store";
 
 const combinedReducer = combineReducers({
   [loginAPI.reducerPath]: loginAPI.reducer,
   [statisticsApi.reducerPath]: statisticsApi.reducer,
   accessToken: accessTokenReducer,
   username: usernameReducer,
+  openModal: openModalReducer,
 });
 
 const reducer = (

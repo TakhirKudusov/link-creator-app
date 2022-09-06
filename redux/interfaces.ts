@@ -19,3 +19,7 @@ export interface TAccessTokenState {
 export interface TUsernameState {
   username: string | null;
 }
+
+export interface TOpenModalState {
+  isOpen: boolean;
+}
