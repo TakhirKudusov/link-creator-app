@@ -15,3 +15,13 @@
     bottom: 3px;
   }
 }
+
+.filter-container {
+  margin: 18px auto auto auto;
+  position: absolute;
+  right: 135px;
+  &__selector {
+    max-width: 300px;
+    min-width: 225px;
+  }
+}

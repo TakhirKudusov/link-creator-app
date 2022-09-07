@@ -1,25 +1,29 @@
 import { Skeleton, Table } from "antd";
 import { DataType } from "./interfaces";
 import { columns } from "./constants";
-import { useEffect, useState } from "react";
 import { useGetStatisticsQuery } from "../../redux/APIs/statisticsAPI";
-import { handleChangeTablePage } from "./helpers";
+import { handleRefetchData } from "./helpers";
 import { useDispatch } from "react-redux";
 import NewLinkDrawer from "./NewLinkDrawer";
+import { useAppSelector } from "../../redux/hooks";
+import { useEffect } from "react";
+import { setIsLoading } from "../../redux/slicers/formParametersSlicer";
+import { setData } from "../../redux/slicers/dataSlicer";
 
 const LinksTable: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [rows, setRows] = useState<DataType[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const filter = useAppSelector<string>((state) => state.filter.filter);
+  const dataRows = useAppSelector<DataType[]>((state) => state.data.data);
+  const loading = useAppSelector<boolean>(
+    (state) => state.formParameters.isLoading
+  );
+  const currentPage = useAppSelector<number>(
+    (state) => state.formParameters.currentPage
+  );
   const dispatch = useDispatch();
-  const { data = [], isLoading, isSuccess } = useGetStatisticsQuery(0);
 
   useEffect(() => {
-    if (isSuccess) {
-      setRows(data);
-    }
-    setLoading(isLoading);
-  }, [isSuccess, isLoading]);
+    handleRefetchData(dispatch, filter, "0");
+  }, []);
 
   return (
     <>
@@ -37,16 +41,9 @@ const LinksTable: React.FC = () => {
               current: currentPage,
             }}
             columns={columns}
-            dataSource={rows}
-            onChange={(e) => {
-              handleChangeTablePage(
-                e,
-                dispatch,
-                setRows,
-                setCurrentPage,
-                setLoading,
-                data
-              );
+            dataSource={dataRows}
+            onChange={async (e) => {
+              handleRefetchData(dispatch, filter, "", e);
             }}
           />
           <NewLinkDrawer />

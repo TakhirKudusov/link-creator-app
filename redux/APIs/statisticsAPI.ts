@@ -4,6 +4,7 @@ import { DataType } from "../../components/home/interfaces";
 import { handleOpenSuccessNotificationHelper } from "../../common/helpers/handleOpenSuccessNotification.helper";
 import { handleOpenErrorNotificationHelper } from "../../common/helpers/handleOpenErrorNotification.helper";
 import { StatusCodesEnum } from "../../common/enums/StatusCodes.enum";
+import { setIsLoading } from "../slicers/formParametersSlicer";
 
 export const statisticsApi = createApi({
   reducerPath: "statisticsApi",
@@ -18,24 +19,23 @@ export const statisticsApi = createApi({
       return headers;
     },
   }),
-  keepUnusedDataFor: 60,
+  keepUnusedDataFor: 600,
   endpoints: (build) => ({
     getStatistics: build.query({
-      query: (offset = "0"): { url: string } => ({
-        url: `statistics?offset=${offset}&limit=20`,
+      query: ({ offset = "0", filter = "" }): { url: string } => ({
+        url: `statistics?offset=${offset}&limit=20${filter}`,
       }),
-      onQueryStarted: async (arg, { queryFulfilled }) => {
-        queryFulfilled
-          .then((data) => {
-            console.log(data);
-          })
-          .catch((error) => {
-            console.error(error.error.data.detail);
-            handleOpenErrorNotificationHelper(
-              StatusCodesEnum[error.error.status]
-            );
-          });
-      },
+      // onQueryStarted: async (arg, { queryFulfilled, dispatch }) => {
+      //   dispatch(setIsLoading(true));
+      //   queryFulfilled
+      //     .then((data) => {
+      //       console.log(data);
+      //     })
+      //     .catch((error) => {
+      //       console.error(error.error.data.detail);
+      //     })
+      //     .finally(() => dispatch(setIsLoading(false)));
+      // },
       transformResponse: (response: Omit<DataType, "key">[], meta, arg) => {
         const newResp = [
           ...response.map((item) => ({
@@ -54,8 +54,8 @@ export const statisticsApi = createApi({
         if (newResp.length >= 20) {
           newResp.push(emptyItem);
         }
-        if (Number.parseInt(arg, 10) > 0) {
-          for (let i = 0; i < Number.parseInt(arg, 10); i++) {
+        if (Number.parseInt(arg.offset, 10) > 0) {
+          for (let i = 0; i < Number.parseInt(arg.offset, 10); i++) {
             newResp.unshift(emptyItem);
           }
         }

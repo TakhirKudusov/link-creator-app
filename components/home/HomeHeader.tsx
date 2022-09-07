@@ -2,6 +2,7 @@ import { Button } from "antd";
 import styles from "./index.module.scss";
 import { useAppDispatch } from "../../redux/hooks";
 import { setOpen } from "../../redux/slicers/openModalSlicer";
+import LinksSorter from "./LinksSorter";
 
 const HomeHeader: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -11,6 +12,7 @@ const HomeHeader: React.FC = () => {
       <span className={styles["header-container__title"]}>
         <h1>Statistics</h1>
       </span>
+      <LinksSorter />
       <span className={styles["header-container__button"]}>
         <Button onClick={() => dispatch(setOpen())} type="primary">
           New short link

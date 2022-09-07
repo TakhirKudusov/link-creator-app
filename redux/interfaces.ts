@@ -1,3 +1,5 @@
+import { DataType } from "../components/home/interfaces";
+
 export interface UserArgs {
   username: string;
   password: string;
@@ -22,4 +24,17 @@ export interface TUsernameState {
 
 export interface TOpenModalState {
   isOpen: boolean;
+}
+
+export interface TFilterState {
+  filter: string;
+}
+
+export interface TDataState {
+  data: DataType[];
+}
+
+export interface TFormParametersState {
+  currentPage: number;
+  isLoading: boolean;
 }

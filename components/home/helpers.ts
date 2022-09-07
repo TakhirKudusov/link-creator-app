@@ -3,38 +3,37 @@ import { TablePaginationConfig } from "antd";
 import { statisticsApi } from "../../redux/APIs/statisticsAPI";
 import { AppDispatch } from "../../redux/types";
 import { DataType } from "./interfaces";
-import { handleOpenErrorNotificationHelper } from "../../common/helpers/handleOpenErrorNotification.helper";
+import { setData } from "../../redux/slicers/dataSlicer";
+import {
+  setCurrentPage,
+  setIsLoading,
+} from "../../redux/slicers/formParametersSlicer";
 import { StatusCodesEnum } from "../../common/enums/StatusCodes.enum";
+import { handleOpenErrorNotificationHelper } from "../../common/helpers/handleOpenErrorNotification.helper";
 
-const handleChangeTablePage = async (
-  e: TablePaginationConfig,
+const handleRefetchData = (
   dispatch: AppDispatch,
-  setData: Dispatch<SetStateAction<DataType[]>>,
-  setCurrentPage: Dispatch<SetStateAction<number>>,
-  setLoading: Dispatch<SetStateAction<boolean>>,
-  prevData: DataType[]
-) => {
-  if (e.current !== 1) {
-    try {
-      setLoading(true);
-      const data = await dispatch(
-        statisticsApi.endpoints.getStatistics.initiate(
-          String((e.current! - 1) * 20)
-        )
-      );
-      if (data.status === "fulfilled" || data.status === "rejected") {
-        setLoading(false);
-      }
-      setData(data.data);
-      setCurrentPage(e.current!);
-    } catch (error: any) {
-      console.error(error.error.data.detail);
+  filter: string,
+  offset?: string,
+  e?: TablePaginationConfig
+): void => {
+  dispatch(setIsLoading(true));
+  dispatch(
+    statisticsApi.endpoints.getStatistics.initiate({
+      offset: offset ? offset : String((e?.current! - 1) * 20),
+      filter,
+    })
+  )
+    .then((data) => {
+      console.log(data.data);
+      dispatch(setData(data.data));
+      dispatch(setCurrentPage(e ? e.current : 1));
+    })
+    .catch((error) => {
+      console.error(error);
       handleOpenErrorNotificationHelper(StatusCodesEnum[error.error.status]);
-    }
-  } else {
-    setData(prevData);
-    setCurrentPage(e.current!);
-  }
+    })
+    .finally(() => dispatch(setIsLoading(false)));
 };
 
 const handleValidateForm = async (
@@ -51,4 +50,4 @@ const handleValidateForm = async (
   }
 };
 
-export { handleChangeTablePage, handleValidateForm };
+export { handleValidateForm, handleRefetchData };
