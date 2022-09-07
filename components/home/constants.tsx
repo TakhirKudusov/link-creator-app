@@ -1,7 +1,8 @@
-import { DataType } from "./interfaces";
+import { DataType, SelectOption } from "./interfaces";
 import { ColumnsType } from "antd/es/table/interface";
 import { Button, message } from "antd";
 import { handleOpenSuccessNotificationHelper } from "../../common/helpers/handleOpenSuccessNotification.helper";
+import { Order, Option } from "./enums";
 
 const columns: ColumnsType<DataType> = [
   {
@@ -46,4 +47,31 @@ const columns: ColumnsType<DataType> = [
   },
 ];
 
-export { columns };
+const selectOptions: SelectOption[] = [
+  {
+    label: "Ascending order for short",
+    value: `&order=${Order.ASC}_${Option.SHORT}`,
+  },
+  {
+    label: "Ascending order for target",
+    value: `&order=${Order.ASC}_${Option.TARGET}`,
+  },
+  {
+    label: "Ascending order for counter",
+    value: `&order=${Order.ASC}_${Option.COUNTER}`,
+  },
+  {
+    label: "Descending order for short",
+    value: `&order=${Order.DESC}_${Option.SHORT}`,
+  },
+  {
+    label: "Descending order for target",
+    value: `&order=${Order.DESC}_${Option.TARGET}`,
+  },
+  {
+    label: "Descending order for counter",
+    value: `&order=${Order.DESC}_${Option.COUNTER}`,
+  },
+];
+
+export { columns, selectOptions };

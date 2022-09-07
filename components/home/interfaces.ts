@@ -5,3 +5,8 @@ export interface DataType {
   target: string;
   counter: number;
 }
+
+export interface SelectOption {
+  label: string;
+  value: string;
+}

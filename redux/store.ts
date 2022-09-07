@@ -4,6 +4,9 @@ import { statisticsApi } from "./APIs/statisticsAPI";
 import accessTokenReducer from "./slicers/accessTokenSlicer";
 import usernameReducer from "./slicers/usernameSlicer";
 import openModalReducer from "./slicers/openModalSlicer";
+import filterReducer from "./slicers/filterSlicer";
+import dataReducer from "./slicers/dataSlicer";
+import formParametersReducer from "./slicers/formParametersSlicer";
 import { createWrapper, HYDRATE } from "next-redux-wrapper";
 import { CurriedGetDefaultMiddleware } from "@reduxjs/toolkit/src/getDefaultMiddleware";
 
@@ -13,6 +16,9 @@ const combinedReducer = combineReducers({
   accessToken: accessTokenReducer,
   username: usernameReducer,
   openModal: openModalReducer,
+  filter: filterReducer,
+  data: dataReducer,
+  formParameters: formParametersReducer,
 });
 
 const reducer = (
